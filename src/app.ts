@@ -1,9 +1,30 @@
-import express, { Application, Request, Response } from 'express'
+import express, { Application } from 'express'
+import * as bodyParser from 'body-parser'
 
-const app: Application = express()
+class App {
+  public app: Application
+  public port: number
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello')
-})
+  constructor(controllers, port) {
+    this.app = express()
+    this.port = port
+    this.intializeMiddlewares()
+    this.initializeControllers(controllers)
+  }
 
-app.listen(5000, () => console.log('listening on port 5000'))
+  private intializeMiddlewares(): void {
+    this.app.use(bodyParser.json())
+  }
+  private initializeControllers(controllers): void {
+    controllers.forEach(controller => {
+      this.app.use('/', controller.router)
+    })
+  }
+  public listen(): void {
+    this.app.listen(this.port, () => {
+      console.log(`App listening on the port ${this.port}`)
+    })
+  }
+}
+
+export default App
