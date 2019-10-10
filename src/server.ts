@@ -1,6 +1,6 @@
 import App from './app'
-import PostsController from './posts/post.controller'
+import UsersController from './users/user.controller'
 
-const app = new App([new PostsController()], 5000)
+const app = new App([new UsersController()], 5000)
 
 app.listen()
