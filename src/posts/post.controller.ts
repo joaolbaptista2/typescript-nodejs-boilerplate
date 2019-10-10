@@ -22,7 +22,10 @@ class PostsController {
     this.router.post(this.path, this.createAPost)
   }
 
-  getAllPosts = (response: express.Response): void => {
+  getAllPosts = (
+    request: express.Request,
+    response: express.Response,
+  ): void => {
     response.send(this.posts)
   }
 
